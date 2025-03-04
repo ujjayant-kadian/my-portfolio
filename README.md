@@ -29,8 +29,8 @@ To run this project locally:
 
 1. Clone the repository:
    ```bash
-   git clone <repository-url>
-   cd <project-folder>
+   git clone https://github.com/ujjayant-kadian/my-portfolio.git
+   cd my-portfolio
    ```
 2. Install dependencies:
    ```bash
