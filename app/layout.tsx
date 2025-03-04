@@ -2,6 +2,7 @@ import type React from "react"
 import type { Metadata } from "next"
 import { Inter, Fira_Code } from "next/font/google"
 import "./globals.css"
+import ScrollToTop from "@/components/scroll-to-top"
 
 const inter = Inter({
   subsets: ["latin"],
@@ -29,6 +30,7 @@ export default function RootLayout({
         className={`${inter.variable} ${firaCode.variable} font-sans bg-terminal-black text-terminal-green min-h-screen`}
       >
         {children}
+        <ScrollToTop />
       </body>
     </html>
   )
