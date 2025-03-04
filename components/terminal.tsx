@@ -89,7 +89,7 @@ export default function Terminal() {
     if (input.trim() === "") return
 
     const result = handleCommand(input)
-    setOutput((prev) => [...prev, ...result])
+    setOutput((prev) => [...prev, ...result.filter((item) => item !== null)])
 
     // Scroll terminal content to bottom after updating output
     setTimeout(() => {

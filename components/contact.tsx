@@ -6,6 +6,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
+import emailjs from "emailjs-com";
 
 export default function Contact() {
   const [formState, setFormState] = useState({
@@ -34,21 +35,31 @@ export default function Contact() {
     setIsSubmitting(true)
     setSubmitMessage(null)
 
-    // Simulate form submission
-    setTimeout(() => {
-      setIsSubmitting(false)
-      setSubmitMessage({
-        type: "success",
-        text: "Message sent successfully! I'll get back to you soon.",
-      })
-
-      // Reset form
-      setFormState({
-        name: "",
-        email: "",
-        message: "",
-      })
-    }, 1500)
+    emailjs
+    .sendForm(
+      process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID!,
+      process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID!,
+      e.currentTarget as HTMLFormElement,
+      process.env.NEXT_PUBLIC_EMAILJS_USER_ID!
+    )
+    .then(
+      (result) => {
+        setSubmitMessage({
+          type: "success",
+          text: "Message sent successfully! I'll get back to you soon.",
+        });
+        setFormState({ name: "", email: "", message: "" });
+      },
+      (error) => {
+        setSubmitMessage({
+          type: "error",
+          text: "Failed to send message. Please try again later.",
+        });
+      }
+    )
+    .finally(() => {
+      setIsSubmitting(false);
+    });
   }
 
   return (
@@ -141,7 +152,7 @@ export default function Contact() {
                 <Button
                   type="submit"
                   disabled={isSubmitting}
-                  className="bg-terminal-green hover:bg-terminal-green/90 text-terminal-black font-medium"
+                  className="bg-terminal-green hover:bg-terminal-purple/50 text-terminal-black font-medium"
                 >
                   {isSubmitting ? (
                     <span className="flex items-center">

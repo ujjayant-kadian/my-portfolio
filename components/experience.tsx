@@ -2,57 +2,19 @@
 
 import { useState } from "react"
 import { Calendar, MapPin, Briefcase, Download } from "lucide-react"
+import { Experiences } from "@/lib/getExperienceData"
+import { ResumeLinkData } from "@/lib/getResumeLink";
 
-type Experience = {
-  id: number
-  title: string
-  company: string
-  location: string
-  period: string
-  description: string[]
-}
+type ExperienceProps = {
+  experienceData: Experiences[];
+  resumeLinkData: ResumeLinkData | null;
+};
 
-const experienceData: Experience[] = [
-  {
-    id: 1,
-    title: "Senior Frontend Developer",
-    company: "Tech Solutions Inc.",
-    location: "San Francisco, CA",
-    period: "2021 - Present",
-    description: [
-      "Led the development of a React-based dashboard used by over 10,000 customers",
-      "Implemented CI/CD pipelines reducing deployment time by 40%",
-      "Mentored junior developers and conducted code reviews",
-    ],
-  },
-  {
-    id: 2,
-    title: "Full Stack Developer",
-    company: "Digital Innovations",
-    location: "Austin, TX",
-    period: "2018 - 2021",
-    description: [
-      "Built RESTful APIs using Node.js and Express",
-      "Developed and maintained multiple client-facing web applications",
-      "Collaborated with UX designers to implement responsive designs",
-    ],
-  },
-  {
-    id: 3,
-    title: "Web Developer",
-    company: "Creative Agency",
-    location: "Seattle, WA",
-    period: "2016 - 2018",
-    description: [
-      "Created interactive websites for various clients",
-      "Optimized website performance and SEO",
-      "Implemented analytics tracking and reporting",
-    ],
-  },
-]
-
-export default function Experience() {
-  const [activeExp, setActiveExp] = useState<number>(1)
+export default function Experience({ experienceData, resumeLinkData }: ExperienceProps) {
+  if (!experienceData || experienceData.length === 0) {
+    return <div>No experience available</div>;
+  }
+  const [activeExp, setActiveExp] = useState<number>(experienceData[0].id)
 
   return (
     <section id="experience" className="mb-12">
@@ -84,18 +46,18 @@ export default function Experience() {
                   <h3 className="font-mono text-xl text-terminal-blue mb-2">{exp.title}</h3>
                   <div className="flex flex-col sm:flex-row sm:items-center gap-2 mb-4 text-sm">
                     <div className="flex items-center">
-                      <Briefcase className="h-4 w-4 mr-1 text-terminal-green" />
-                      <span>{exp.company}</span>
+                      <Briefcase className="h-4 w-4 mr-1 text-terminal-purple" />
+                      <span className="text-terminal-purple">{exp.company}</span>
                     </div>
-                    <div className="hidden sm:block text-terminal-green">•</div>
+                    <div className="hidden sm:block text-terminal-purple">•</div>
                     <div className="flex items-center">
-                      <MapPin className="h-4 w-4 mr-1 text-terminal-green" />
-                      <span>{exp.location}</span>
+                      <MapPin className="h-4 w-4 mr-1 text-terminal-purple" />
+                      <span className="text-terminal-purple">{exp.location}</span>
                     </div>
-                    <div className="hidden sm:block text-terminal-green">•</div>
+                    <div className="hidden sm:block text-terminal-purple">•</div>
                     <div className="flex items-center">
-                      <Calendar className="h-4 w-4 mr-1 text-terminal-green" />
-                      <span>{exp.period}</span>
+                      <Calendar className="h-4 w-4 mr-1 text-terminal-purple" />
+                      <span className="text-terminal-purple">{exp.period}</span>
                     </div>
                   </div>
                   <ul className="space-y-2">
@@ -112,16 +74,22 @@ export default function Experience() {
         </div>
         <hr />
         <div className="flex justify-center mt-4">
-          <a
-            href="/resume.pdf"  // update the path to your resume file
-            download
-            className="bg-terminal-green hover:bg-terminal-green/90 text-terminal-black font-medium py-2 px-4 rounded"
-          >
-            <span className="flex items-center">
-              <Download className="mr-2 h-4 w-4" />
-              Download Resume
-            </span>
-          </a>
+          {resumeLinkData ? (
+            <a
+              href={resumeLinkData.resumeUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              download
+              className="bg-terminal-green hover:bg-terminal-purple/50 text-terminal-black font-medium py-2 px-4 rounded"
+            >
+              <span className="flex items-center">
+                <Download className="mr-2 h-4 w-4" />
+                Download Resume
+              </span>
+            </a>
+          ) : (
+            <div>Loading resume...</div>
+          )}
         </div>
       </div>
     </section>

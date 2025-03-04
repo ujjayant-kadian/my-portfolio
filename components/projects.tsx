@@ -9,63 +9,21 @@ type ProjectsProps = {
 };
 
 export default function Projects({ projectsData }: ProjectsProps) {
-
   if (!projectsData || projectsData.length === 0) {
     return <div>No projects available</div>;
   }
 
   const [currentProject, setCurrentProject] = useState(0)
-  const [isTyping, setIsTyping] = useState(false)
-  const [typedText, setTypedText] = useState("")
-
   const project = projectsData[currentProject]
 
   const nextProject = () => {
-    setIsTyping(true)
-    setTypedText("")
-
     const nextIndex = (currentProject + 1) % projectsData.length
-
-    // Simulate typing effect for the command
-    const command = `cat ./projects/${projectsData[nextIndex].title.toLowerCase().replace(/\s+/g, "-")}.md`
-    let i = 0
-
-    const typeInterval = setInterval(() => {
-      if (i < command.length) {
-        setTypedText((prev) => prev + command.charAt(i))
-        i++
-      } else {
-        clearInterval(typeInterval)
-        setTimeout(() => {
-          setCurrentProject(nextIndex)
-          setIsTyping(false)
-        }, 300)
-      }
-    }, 30)
+    setCurrentProject(nextIndex)
   }
 
   const prevProject = () => {
-    setIsTyping(true)
-    setTypedText("")
-
     const prevIndex = currentProject === 0 ? projectsData.length - 1 : currentProject - 1
-
-    // Simulate typing effect for the command
-    const command = `cat ./projects/${projectsData[prevIndex].title.toLowerCase().replace(/\s+/g, "-")}.md`
-    let i = 0
-
-    const typeInterval = setInterval(() => {
-      if (i < command.length) {
-        setTypedText((prev) => prev + command.charAt(i))
-        i++
-      } else {
-        clearInterval(typeInterval)
-        setTimeout(() => {
-          setCurrentProject(prevIndex)
-          setIsTyping(false)
-        }, 300)
-      }
-    }, 30)
+    setCurrentProject(prevIndex)
   }
 
   return (
@@ -84,34 +42,23 @@ export default function Projects({ projectsData }: ProjectsProps) {
         </div>
 
         <div className="font-mono text-sm text-terminal-green mb-4">
-          {isTyping ? (
-            <div className="flex items-center">
-              <span className="mr-2">$</span>
-              <span>{typedText}</span>
-              <span className="terminal-cursor ml-0.5"></span>
-            </div>
-          ) : (
-            <div className="flex items-center">
-              <span className="mr-2">$</span>
-              <span>cat ./projects/{project.title.toLowerCase().replace(/\s+/g, "-")}.md</span>
-            </div>
-          )}
+          <div className="flex items-center">
+            <span className="mr-2">$</span>
+            <span>cat ./projects/{project.title.toLowerCase().replace(/\s+/g, "-")}.md</span>
+          </div>
         </div>
 
         <div className="bg-terminal-black p-4 rounded-md border border-terminal-border mb-4 min-h-[250px]">
-          <div className={`transition-opacity duration-300 ${!isTyping ? "opacity-100" : "opacity-0"}`}>
+          <div className="transition-opacity duration-300 opacity-100">
             <h3 className="font-mono text-xl text-terminal-blue mb-2">{project.title}</h3>
-
             <p className="mb-4">{project.description}</p>
-
             <div className="flex flex-wrap gap-2 mb-4">
               {project.tags.map((tag, index) => (
-                <span key={index} className="text-xs px-2 py-1 rounded-md bg-terminal-bg text-terminal-green">
+                <span key={index} className="text-xs px-2 py-1 rounded-md bg-terminal-bg text-terminal-purple">
                   {tag}
                 </span>
               ))}
             </div>
-
             <div className="flex space-x-4">
               <a
                 href={project.github}
@@ -150,9 +97,7 @@ export default function Projects({ projectsData }: ProjectsProps) {
             {projectsData.map((_, index) => (
               <span
                 key={index}
-                className={`inline-block w-2 h-2 rounded-full ${
-                  index === currentProject ? "bg-terminal-green" : "bg-terminal-border"
-                }`}
+                className={`inline-block w-2 h-2 rounded-full ${index === currentProject ? "bg-terminal-green" : "bg-terminal-border"}`}
               ></span>
             ))}
           </div>
@@ -184,4 +129,3 @@ export default function Projects({ projectsData }: ProjectsProps) {
     </section>
   )
 }
-

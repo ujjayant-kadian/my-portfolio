@@ -17,6 +17,14 @@ const firaCode = Fira_Code({
 export const metadata: Metadata = {
   title: "Terminal Portfolio",
   description: "A terminal-themed portfolio website",
+  icons: {
+    icon: [
+      {
+        url: "/favicon.ico",
+        sizes: "any",
+      },
+    ]
+  },
 }
 
 export default function RootLayout({
