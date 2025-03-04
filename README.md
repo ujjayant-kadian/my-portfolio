@@ -52,7 +52,7 @@ This portfolio is deployed on **Vercel**. To deploy your own version:
 
 
 ## 📜 License & Copyright
-Copyright © 2024 Ujjayant Kadian. All rights reserved.
+Copyright © 2025 Ujjayant Kadian. All rights reserved.
 
 This project is licensed under the MIT License, allowing modification and distribution with proper attribution.
 
