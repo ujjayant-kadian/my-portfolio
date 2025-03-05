@@ -7,17 +7,28 @@ export type Skill = {
   category: string;
 };
 
+interface ContentfulSkillEntry {
+  sys: {
+    id: string;
+  };
+  fields: {
+    skillName: string;
+    level: number;
+    category: string;
+  };
+}
+
 export async function fetchSkills(): Promise<Skill[]> {
-  const res = await client.getEntries({
+  const res = await client.getEntries<ContentfulSkillEntry>({
     content_type: "skillsSection",
     order: ["sys.createdAt"],
   });
 
-  const skillsData: Skill[] = res.items.map((item: any) => ({
+  const skillsData: Skill[] = res.items.map((item) => ({
     id: parseInt(item.sys.id, 10),
-    skillName: item.fields.skillName as string,
-    level: item.fields.level as number,
-    category: item.fields.category as string,
+    skillName: item.fields.skillName,
+    level: item.fields.level,
+    category: item.fields.category,
   }));
 
   return skillsData;

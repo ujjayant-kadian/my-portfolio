@@ -1,7 +1,7 @@
 "use client";
 
-import { useState } from "react";
 import { WhoAmISection } from "@/lib/getDescription";
+import Image from "next/image";
 
 type WhoAmISectionProps = {
   whoAmISection: WhoAmISection;
@@ -56,7 +56,13 @@ export default function Whoami({ whoAmISection }: WhoAmISectionProps) {
             <div className="relative">
               <div className="bg-terminal-bg p-1 rounded-md border border-terminal-border overflow-hidden">
                 <div className="w-full max-w-[200px] aspect-square relative overflow-hidden rounded-sm">
-                  <img src={aboutData.profileImageUrl} alt="Profile picture" className="w-full h-full object-cover" />
+                <Image
+                    src={`https:${aboutData.profileImageUrl}`}
+                    alt="Profile picture"
+                    width={200} // Specify width for optimization
+                    height={200} // Specify height for optimization
+                    className="w-full h-full object-cover"
+                  />
                   <div className="absolute inset-0 bg-gradient-to-t from-terminal-black/70 to-transparent"></div>
                 </div>
               </div>

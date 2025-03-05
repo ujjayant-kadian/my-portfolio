@@ -9,11 +9,12 @@ type ProjectsProps = {
 };
 
 export default function Projects({ projectsData }: ProjectsProps) {
+  const [currentProject, setCurrentProject] = useState(0)
+  
   if (!projectsData || projectsData.length === 0) {
     return <div>No projects available</div>;
   }
 
-  const [currentProject, setCurrentProject] = useState(0)
   const project = projectsData[currentProject]
 
   const nextProject = () => {

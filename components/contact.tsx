@@ -1,8 +1,8 @@
 "use client"
 
 import React, { useState } from "react"
-import { Mail, Send } from "lucide-react"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Send } from "lucide-react"
+import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
@@ -43,14 +43,14 @@ export default function Contact() {
       process.env.NEXT_PUBLIC_EMAILJS_USER_ID!
     )
     .then(
-      (result) => {
+      () => {
         setSubmitMessage({
           type: "success",
           text: "Message sent successfully! I'll get back to you soon.",
         });
         setFormState({ name: "", email: "", message: "" });
       },
-      (error) => {
+      () => {
         setSubmitMessage({
           type: "error",
           text: "Failed to send message. Please try again later.",

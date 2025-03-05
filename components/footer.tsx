@@ -8,7 +8,7 @@ export default function Footer() {
           <div className="mb-4 md:mb-0">
             <p className="font-mono text-sm text-terminal-green">
               <span className="text-terminal-blue">const</span> <span className="text-terminal-purple">portfolio</span>{" "}
-              = <span className="text-terminal-green">"© {new Date().getFullYear()} Ujjayant Kadian | All Rights Reserved."</span>;
+              = <span className="text-terminal-green">&quot;© {new Date().getFullYear()} Ujjayant Kadian | All Rights Reserved.&quot;</span>;
             </p>
           </div>
           <div className="flex space-x-4">

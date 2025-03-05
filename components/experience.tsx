@@ -11,10 +11,13 @@ type ExperienceProps = {
 };
 
 export default function Experience({ experienceData, resumeLinkData }: ExperienceProps) {
+  const [activeExp, setActiveExp] = useState<number>(
+    experienceData && experienceData.length > 0 ? experienceData[0].id : 0
+  );
+
   if (!experienceData || experienceData.length === 0) {
     return <div>No experience available</div>;
   }
-  const [activeExp, setActiveExp] = useState<number>(experienceData[0].id)
 
   return (
     <section id="experience" className="mb-12">
