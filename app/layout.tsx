@@ -1,5 +1,6 @@
 import type React from "react"
 import type { Metadata } from "next"
+import { Analytics } from "@vercel/analytics/react"
 import { Inter, Fira_Code } from "next/font/google"
 import "./globals.css"
 import ScrollToTop from "@/components/scroll-to-top"
@@ -39,6 +40,7 @@ export default function RootLayout({
       >
         {children}
         <ScrollToTop />
+        <Analytics />
       </body>
     </html>
   )
