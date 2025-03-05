@@ -1,5 +1,7 @@
 import client from "./contentful";
-import { documentToPlainTextString } from '@contentful/rich-text-plain-text-renderer';
+import { documentToPlainTextString } from "@contentful/rich-text-plain-text-renderer";
+import { Document } from "@contentful/rich-text-types";
+import { Asset } from "contentful";
 
 export type WhoAmISection = {
   description: string;
@@ -18,9 +20,16 @@ export async function fetchWhoAmISection(): Promise<WhoAmISection | null> {
 
   const entry = res.items[0];
 
-  const description = documentToPlainTextString(entry.fields.description);
+  const descriptionField = entry.fields.description;
+  const description = descriptionField && typeof descriptionField === "object" && "nodeType" in descriptionField
+    ? documentToPlainTextString(descriptionField as Document)
+    : "";
+
+  const profileImage = entry.fields.profileImage as Asset | undefined;
+  const profileImageUrl =
+    profileImage?.fields.file?.url ? String(profileImage.fields.file.url) : "";
+
   const keywords = (entry.fields.keywords as string[]) || [];
-  const profileImageUrl = entry.fields.profileImage?.fields?.file?.url || '';
 
   return {
     description,
